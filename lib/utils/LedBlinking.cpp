@@ -2,12 +2,25 @@
 
 LedBlinking::LedBlinking(int pin)
 {
-    _pin = pin;
+    this->pin = pin;
+    this->animation = Animation(
+        0,
+        255,
+        (unsigned long) 500,
+        Easing::linearTween,
+        Easing::linearTween
+    );
 
-    pinMode(_pin, OUTPUT);
+    pinMode(this->pin, OUTPUT);
+}
+
+LedBlinking::LedBlinking(int pin, Animation &animation)
+{
+    this->pin = pin;
+    this->animation = animation;
 }
 
 void LedBlinking::loop()
 {
-    digitalWrite(_pin, HIGH);
+    analogWrite(this->pin, this->animation.value());
 }
